@@ -36,7 +36,7 @@ RUN cd /srv/velum &&\
 
 RUN ln -s /srv/velum/vendor/bundle/ruby/2.1.0/bin/bundler.ruby2.1 /bin/bundle
 
-RUN gem install --no-ri --no-rdoc bundler --version '<= 0.16.0' -n /bin
+RUN gem install --no-ri --no-rdoc bundler --version '<= 1.17.3' -n /bin
 
 RUN find /{bin,usr} -type f -name "bundle*" -exec /bin/ls -l {} \;
 
