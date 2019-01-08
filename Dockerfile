@@ -2,7 +2,7 @@ FROM opensuse/leap:42.3 as intermediate
 #### BUILD AND DEPLOYMENT STEPS ####
 
 # Install stuff taken for granted on IBS images
-RUN zypper in -y ruby-devel tar wget
+RUN zypper in -y gcc gcc-c++ libxml2-devel libxslt-devel libmysqlclient-devel make ruby2.1-devel tar wget
 
 ENV BUNDLER_BIN=/srv/velum/vendor/bundle/ruby/2.1.0/bin/bundler.ruby2.1
 ENV GEM_PATH=/srv/velum/vendor/bundle/ruby/2.1.0
@@ -28,6 +28,8 @@ COPY LICENSE /srv/velum
 COPY Rakefile /srv/velum
 COPY VERSION /srv/velum
 
+WORKDIR /srv/velum
+
 # other steps derived from setup scripts and mystery files on IBS
 RUN cd /srv/velum &&\
     mkdir -p /var/lib/velum &&\ 
@@ -36,7 +38,7 @@ RUN cd /srv/velum &&\
 
 RUN ln -s /srv/velum/vendor/bundle/ruby/2.1.0/bin/bundler.ruby2.1 /bin/bundle
 
-RUN gem install --no-ri --no-rdoc bundler --version '<= 1.17.3' -n /bin
+RUN gem install --no-ri --no-rdoc bundler --version '<= 1.17.3' -n /usr/bin
 
 RUN find /{bin,usr} -type f -name "bundle*" -exec /bin/ls -l {} \;
 
